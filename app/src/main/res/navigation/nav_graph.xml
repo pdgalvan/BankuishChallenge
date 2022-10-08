@@ -9,5 +9,24 @@
         android:id="@+id/githubRepositoryListFragment"
         android:name="com.example.sampleproject.presentation.repositorylist.GithubRepositoryListFragment"
         android:label="github_repository_list_fragment"
-        tools:layout="@layout/github_repository_list_fragment" />
+        tools:layout="@layout/github_repository_list_fragment">
+        <action
+            android:id="@+id/action_githubRepositoryListFragment_to_githubRepositoryDetailFragment"
+            app:destination="@id/githubRepositoryDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/githubRepositoryDetailFragment"
+        android:name="com.example.sampleproject.presentation.repositorydetail.GithubRepositoryDetailFragment"
+        android:label="github_repository_detail_fragment"
+        tools:layout="@layout/github_repository_detail_fragment">
+
+        <argument
+            android:name="request"
+            android:defaultValue="@null"
+            app:argType="com.example.sampleproject.presentation.repositorydetail.RepositoryDetailRequest"
+            app:nullable="true"/>
+
+    </fragment>
 </navigation>

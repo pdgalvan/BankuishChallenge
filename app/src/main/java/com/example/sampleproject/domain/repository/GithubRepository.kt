@@ -9,4 +9,10 @@ interface GithubRepository {
     suspend fun getRepositoryList(
         query: String
     ): Flow<PagingData<GithubRepo>>
+
+    suspend fun getRepositoryDetail(
+        ownerName: String,
+        repoName: String
+    ): RepositoryResponse<GithubRepo>
+
 }

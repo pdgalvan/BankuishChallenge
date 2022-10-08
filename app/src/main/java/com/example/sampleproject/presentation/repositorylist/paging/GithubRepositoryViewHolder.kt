@@ -8,10 +8,16 @@ import com.example.sampleproject.domain.model.GithubRepo
 class GithubRepositoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = ItemGithubRepositoryBinding.bind(view)
 
-    fun setup(githubRepo: GithubRepo) {
+    fun setup(githubRepo: GithubRepo, onSelect: (String, String) -> Unit) {
         binding.apply {
             repoName.text = githubRepo.name
             ownerName.text = githubRepo.owner.name
+            ownerName.setOnClickListener {
+                onSelect(githubRepo.owner.name, githubRepo.name)
+            }
+            cvRepoItem.setOnClickListener {
+                onSelect(githubRepo.owner.name, githubRepo.name)
+            }
         }
     }
 

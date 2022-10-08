@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleproject.databinding.GithubRepositoryListFragmentBinding
+import com.example.sampleproject.presentation.repositorydetail.RepositoryDetailRequest
 import com.example.sampleproject.presentation.repositorylist.paging.GithubRepositoryAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GithubRepositoryListFragment : Fragment() {
 
-    private val adapter by lazy { GithubRepositoryAdapter() }
+    private lateinit var adapter: GithubRepositoryAdapter
     private lateinit var viewBinding: GithubRepositoryListFragmentBinding
     private val viewModel by viewModel<GithubRepositoryListViewModel>()
 
@@ -42,6 +44,17 @@ class GithubRepositoryListFragment : Fragment() {
     }
 
     private fun setupUi() {
+        adapter = GithubRepositoryAdapter { param1, param2 ->
+            findNavController().navigate(
+                GithubRepositoryListFragmentDirections.actionGithubRepositoryListFragmentToGithubRepositoryDetailFragment(
+                    RepositoryDetailRequest(
+                        param1, param2
+                    )
+                )
+            )
+
+
+        }
         viewBinding.apply {
             recyclerGithubRepo.layoutManager = LinearLayoutManager(requireContext())
             recyclerGithubRepo.adapter = adapter

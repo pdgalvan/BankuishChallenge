@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.sampleproject.R
 import com.example.sampleproject.domain.model.GithubRepo
 
-class GithubRepositoryAdapter :
+class GithubRepositoryAdapter(private val onSelect:(String, String) -> Unit ) :
     PagingDataAdapter<GithubRepo, GithubRepositoryViewHolder>(COMPARATOR) {
     override fun onBindViewHolder(holder: GithubRepositoryViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.setup(it)
+            holder.setup(it, onSelect)
         }
     }
 
