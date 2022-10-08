@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.sampleproject.domain.model.GithubRepo
 import com.example.sampleproject.domain.usecase.GetRepositoryListUseCase
+import com.example.sampleproject.util.Constants.KOTLIN
 import kotlinx.coroutines.flow.Flow
 
 class GithubRepositoryListViewModel constructor(
@@ -13,6 +14,6 @@ class GithubRepositoryListViewModel constructor(
 ) : ViewModel() {
 
     suspend fun getList(): Flow<PagingData<GithubRepo>> {
-        return getRepositoryListUseCase.invoke("kotlin").cachedIn(viewModelScope)
+        return getRepositoryListUseCase.invoke(KOTLIN).cachedIn(viewModelScope)
     }
 }

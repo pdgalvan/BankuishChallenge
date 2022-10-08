@@ -16,17 +16,9 @@ sealed class RepositoryResponse<out T>(
         data = null,
         message = exception
     )
-
-    /*data class Loading<out T>(val _data: T?, val isLoading: Boolean) : RepositoryResponse<T>(
-        status = ResponseStatus.LOADING,
-        data = _data,
-        message = null
-    )*/
-
 }
 
 enum class ResponseStatus {
     SUCCESS,
-    ERROR,
-    LOADING
+    ERROR
 }

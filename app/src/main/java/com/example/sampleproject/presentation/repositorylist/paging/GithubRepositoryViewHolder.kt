@@ -12,11 +12,10 @@ class GithubRepositoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.apply {
             repoName.text = githubRepo.name
             ownerName.text = githubRepo.owner.name
-            ownerName.setOnClickListener {
-                onSelect(githubRepo.owner.name, githubRepo.name)
-            }
             cvRepoItem.setOnClickListener {
-                onSelect(githubRepo.owner.name, githubRepo.name)
+                with(githubRepo) {
+                    onSelect(owner.name, name)
+                }
             }
         }
     }
