@@ -1,5 +1,6 @@
 package com.example.sampleproject.data.remote
 
+import com.example.sampleproject.domain.model.GhResponse
 import com.example.sampleproject.domain.model.GithubRepo
 import retrofit2.Response
 import retrofit2.http.GET
@@ -23,5 +24,5 @@ interface GithubApi {
         @Query(QUERY_PARAM) query: String,
         @Query(AMOUNT_PER_PAGE) amountPerPage: Int,
         @Query(CURRENT_PAGE) currentPage: Int
-    ): Response<List<GithubRepo>>
+    ): GhResponse
 }
