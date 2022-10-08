@@ -1,5 +1,5 @@
 package com.example.sampleproject.domain.model
 
-data class Owner(
+data class Topic(
     val name: String
 )

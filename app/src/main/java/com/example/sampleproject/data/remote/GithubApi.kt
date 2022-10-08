@@ -1,6 +1,7 @@
 package com.example.sampleproject.data.remote
 
-import com.example.sampleproject.domain.model.GhResponse
+import com.example.sampleproject.data.remote.model.GithubRepoDto
+import com.example.sampleproject.data.remote.model.GithubRepositoryListResponse
 import com.example.sampleproject.domain.model.GithubRepo
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -32,11 +33,11 @@ interface GithubApi {
         @Query(QUERY_PARAM) query: String,
         @Query(AMOUNT_PER_PAGE) amountPerPage: Int,
         @Query(CURRENT_PAGE) currentPage: Int
-    ): GhResponse
+    ): GithubRepositoryListResponse
 
     @GET(Repository.DETAIL)
     suspend fun getRepositoryDetail(
         @Path(OWNER_NAME) ownerName: String,
         @Path(REPO_NAME) repoName: String
-    ): GithubRepo
+    ): GithubRepoDto
 }

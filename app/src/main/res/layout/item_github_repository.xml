@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvRepoItem"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,26 +19,25 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/repoName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toTopOf="@+id/ownerName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tool:text="Repo" />
-
-            <TextView
                 android:id="@+id/ownerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/repoName"
                 app:layout_constraintStart_toStartOf="@+id/repoName"
                 app:layout_constraintTop_toBottomOf="@+id/repoName"
                 tool:text="owner" />
+
+            <TextView
+                android:id="@+id/repoName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/ownerName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tool:text="Repo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

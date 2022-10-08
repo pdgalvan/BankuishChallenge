@@ -3,12 +3,15 @@ package com.example.sampleproject.data.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.sampleproject.data.remote.GithubApi
+import com.example.sampleproject.data.remote.model.GithubRepoDto
 import com.example.sampleproject.domain.model.GithubRepo
+import com.example.sampleproject.util.ListMapper
 import kotlinx.coroutines.delay
 
-class GithubRepositoryPagingSource(
+class GithubRepositoryPagingSource constructor(
     private val api: GithubApi,
-    private val query: String
+    private val query: String,
+    private val listMapper: ListMapper<GithubRepoDto, GithubRepo>
 ) : PagingSource<Int, GithubRepo>() {
 
     override fun getRefreshKey(state: PagingState<Int, GithubRepo>): Int? {
@@ -24,7 +27,7 @@ class GithubRepositoryPagingSource(
             val response = api.getRepositoryList(query, AMOUNT_PER_PAGE, page)
             delay(2000)
             LoadResult.Page(
-                data = response.list,
+                data = listMapper.toModel(response.list),
                 prevKey = if (page == FIRST_PAGE) null else page - 1,
                 nextKey = if (response.list.isEmpty()) null else page + 1
             )
