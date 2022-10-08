@@ -18,7 +18,7 @@ class GithubRepositoryListViewModel constructor(
         viewModelScope.launch {
             val response = getRepositoryListUseCase.invoke("kotlin", 10, 1)
             _uiState.update { currentUiState ->
-                currentUiState.copy(list = response)
+                currentUiState.copy(isLoading = false, list = response)
             }
         }
     }

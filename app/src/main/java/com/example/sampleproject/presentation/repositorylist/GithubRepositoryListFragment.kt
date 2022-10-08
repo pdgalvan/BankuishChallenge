@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleproject.databinding.GithubRepositoryListFragmentBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,13 +33,20 @@ class GithubRepositoryListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
+        viewBinding.apply {
+            recyclerGithubRepo.layoutManager = LinearLayoutManager(requireContext())
+        }
+
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    val algo = 1
+                    if (uiState.list.isNotEmpty()) {
+                        viewBinding.recyclerGithubRepo.adapter =
+                            GithubRepositoryAdapter(uiState.list)
+                    }
                 }
             }
         }
