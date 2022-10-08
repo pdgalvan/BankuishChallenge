@@ -1,27 +1,27 @@
 package com.example.sampleproject.util
 
-sealed class NetworkResponse<out T>(
+sealed class RepositoryResponse<out T>(
     val status: ResponseStatus,
     val data: T?,
     val message: String?
 ) {
-    data class Success<out T>(val _data: T?) : NetworkResponse<T>(
+    data class Success<out T>(val _data: T?) : RepositoryResponse<T>(
         status = ResponseStatus.SUCCESS,
         data = _data,
         message = null
     )
 
-    data class Error(val exception: String) : NetworkResponse<Nothing>(
+    data class Error(val exception: String?) : RepositoryResponse<Nothing>(
         status = ResponseStatus.ERROR,
         data = null,
         message = exception
     )
 
-    data class Loading<out T>(val _data: T?, val isLoading: Boolean) : NetworkResponse<T>(
+    /*data class Loading<out T>(val _data: T?, val isLoading: Boolean) : RepositoryResponse<T>(
         status = ResponseStatus.LOADING,
         data = _data,
         message = null
-    )
+    )*/
 
 }
 
