@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.sampleproject.data.remote.GithubApi
 import com.example.sampleproject.domain.model.GithubRepo
+import kotlinx.coroutines.delay
 
 class GithubRepositoryPagingSource(
     private val api: GithubApi,
@@ -20,7 +21,8 @@ class GithubRepositoryPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepo> {
         return try {
             val page = params.key ?: FIRST_PAGE
-            val response = api.getRepositoryList(query, 15, page)
+            val response = api.getRepositoryList(query, AMOUNT_PER_PAGE, page)
+            delay(2000)
             LoadResult.Page(
                 data = response.list,
                 prevKey = if (page == FIRST_PAGE) null else page - 1,
@@ -30,6 +32,9 @@ class GithubRepositoryPagingSource(
             LoadResult.Error(e)
         }
     }
-}
 
-private const val FIRST_PAGE = 1;
+    private companion object {
+        const val FIRST_PAGE = 1
+        const val AMOUNT_PER_PAGE = 15
+    }
+}

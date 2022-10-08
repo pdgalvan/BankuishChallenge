@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleproject.databinding.GithubRepositoryListFragmentBinding
 import com.example.sampleproject.presentation.repositorylist.paging.GithubRepositoryAdapter
@@ -16,7 +18,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class GithubRepositoryListFragment : Fragment() {
-    private lateinit var adapter: GithubRepositoryAdapter
+
+    private val adapter by lazy { GithubRepositoryAdapter() }
     private lateinit var viewBinding: GithubRepositoryListFragmentBinding
     private val viewModel by viewModel<GithubRepositoryListViewModel>()
 
@@ -35,12 +38,29 @@ class GithubRepositoryListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-        adapter = GithubRepositoryAdapter()
+        setupUi()
+    }
+
+    private fun setupUi() {
         viewBinding.apply {
             recyclerGithubRepo.layoutManager = LinearLayoutManager(requireContext())
             recyclerGithubRepo.adapter = adapter
         }
-        //adapter.addLoadStateListener {  }
+        adapter.addLoadStateListener { loadState ->
+            viewBinding.recyclerGithubRepo.isVisible =
+                loadState.source.refresh is LoadState.NotLoading
+            viewBinding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            viewBinding.buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
+
+        }
+        viewBinding.buttonRetry.setOnClickListener {
+            adapter.retry()
+        }
+        viewBinding.swipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+            viewBinding.swipeRefresh.isRefreshing = false
+        }
+
     }
 
     private fun observeViewModel() {
