@@ -3,7 +3,7 @@ package com.example.sampleproject.di
 import com.example.sampleproject.data.remote.GithubApi
 import com.example.sampleproject.data.repository.GithubRepositoryImpl
 import com.example.sampleproject.domain.repository.GithubRepository
-import com.example.sampleproject.util.Constant.GIT_HUB_URL
+import com.example.sampleproject.util.Constants.GIT_HUB_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module

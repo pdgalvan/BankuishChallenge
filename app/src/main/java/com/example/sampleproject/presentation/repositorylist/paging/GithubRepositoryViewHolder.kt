@@ -1,4 +1,4 @@
-package com.example.sampleproject.presentation.repositorylist
+package com.example.sampleproject.presentation.repositorylist.paging
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

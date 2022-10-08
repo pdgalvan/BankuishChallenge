@@ -20,7 +20,7 @@ class GithubRepositoryPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepo> {
         return try {
             val page = params.key ?: FIRST_PAGE
-            val response = api.getRepositoryList(query, page, params.loadSize)
+            val response = api.getRepositoryList(query, 15, page)
             LoadResult.Page(
                 data = response.list,
                 prevKey = if (page == FIRST_PAGE) null else page - 1,
