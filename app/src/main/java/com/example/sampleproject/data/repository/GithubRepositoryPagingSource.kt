@@ -25,7 +25,6 @@ class GithubRepositoryPagingSource constructor(
         return try {
             val page = params.key ?: FIRST_PAGE
             val response = api.getRepositoryList(query, AMOUNT_PER_PAGE, page)
-            delay(2000)
             LoadResult.Page(
                 data = listMapper.toModel(response.list),
                 prevKey = if (page == FIRST_PAGE) null else page - 1,

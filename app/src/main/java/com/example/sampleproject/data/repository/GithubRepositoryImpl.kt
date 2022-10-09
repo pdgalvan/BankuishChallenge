@@ -23,7 +23,7 @@ class GithubRepositoryImpl constructor(
     ): Flow<PagingData<GithubRepo>> {
         return Pager(
             pagingSourceFactory = { GithubRepositoryPagingSource(api, query, listMapper) },
-            config = PagingConfig(pageSize = 15)
+            config = PagingConfig(pageSize = REPOSITORY_PAGE_SIZE)
         ).flow
     }
 
@@ -37,5 +37,9 @@ class GithubRepositoryImpl constructor(
         } catch (e: HttpException) {
             RepositoryResponse.Error(e.message())
         }
+    }
+
+    companion object {
+        private const val REPOSITORY_PAGE_SIZE = 15
     }
 }
