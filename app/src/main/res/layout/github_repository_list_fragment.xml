@@ -24,11 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <Button
-        android:id="@+id/button_retry"
+    <TextView
+        android:id="@+id/tvRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:textSize="16sp"
+        tools:text="Retry"
         android:text="@string/retry" />
 </FrameLayout>

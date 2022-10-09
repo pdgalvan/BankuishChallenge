@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleproject.databinding.GithubRepositoryListFragmentBinding
 import com.example.sampleproject.presentation.repositorydetail.RepositoryDetailRequest
@@ -44,36 +45,34 @@ class GithubRepositoryListFragment : Fragment() {
     }
 
     private fun setupUi() {
-        adapter = GithubRepositoryAdapter { param1, param2 ->
+        adapter = GithubRepositoryAdapter { ownerName, repoName ->
             findNavController().navigate(
                 GithubRepositoryListFragmentDirections.actionGithubRepositoryListFragmentToGithubRepositoryDetailFragment(
                     RepositoryDetailRequest(
-                        param1, param2
+                        ownerName, repoName
                     )
                 )
             )
-
-
+        }
+        adapter.addLoadStateListener { loadState ->
+            viewBinding.recyclerGithubRepo.isVisible = loadState.source.refresh is LoadState.NotLoading
+            viewBinding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            viewBinding.tvRetry.isVisible = loadState.source.refresh is LoadState.Error
         }
         viewBinding.apply {
             recyclerGithubRepo.layoutManager = LinearLayoutManager(requireContext())
             recyclerGithubRepo.adapter = adapter
+            recyclerGithubRepo.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            swipeRefresh.setOnRefreshListener {
+                adapter.refresh()
+                viewBinding.swipeRefresh.isRefreshing = false
+            }
         }
-        adapter.addLoadStateListener { loadState ->
-            viewBinding.recyclerGithubRepo.isVisible =
-                loadState.source.refresh is LoadState.NotLoading
-            viewBinding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-            viewBinding.buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
-
-        }
-        viewBinding.buttonRetry.setOnClickListener {
-            adapter.retry()
-        }
-        viewBinding.swipeRefresh.setOnRefreshListener {
-            adapter.refresh()
-            viewBinding.swipeRefresh.isRefreshing = false
-        }
-
     }
 
     private fun observeViewModel() {
