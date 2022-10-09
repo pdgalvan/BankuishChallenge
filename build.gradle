@@ -4,6 +4,7 @@ buildscript {
         koin_version = '3.2.2'
         nav_version = '2.5.2'
         retrofit_version = '2.9.0'
+        okhttp3_version = '4.10.0'
     }
 
     dependencies {
